@@ -1,55 +1,71 @@
 import { useState } from "react";
 
-function Signup({ setShowSignup }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+function Recipient({ setDatabase }) {
+  const [name, setName] = useState("");
+  const [item, setItem] = useState("");
+  const [quantity, setQuantity] = useState("");
 
-  const handleSignup = () => {
-    if (!email || !password) {
+  const generateId = () => {
+    return "RC" + Math.floor(Math.random() * 100000);
+  };
+
+  const handleRequest = () => {
+    if (!name || !item || !quantity) {
       alert("Please fill all fields");
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem("users")) || {};
+    const serialId = generateId();
 
-    if (users[email]) {
-      alert("User already exists");
-      return;
-    }
+    setDatabase((prevDatabase) => ({
+      ...prevDatabase,
+      [serialId]: {
+        type: "Request",
+        name: name,
+        item: item,
+        quantity: quantity,
+        status: "Requested",
+      },
+    }));
 
-    users[email] = password;
+    alert(`Request submitted! Your Serial ID is: ${serialId}`);
 
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert("Account created successfully!");
-    setShowSignup(false);
+    // Clear form
+    setName("");
+    setItem("");
+    setQuantity("");
   };
 
   return (
-    <div className="auth-container">
-      <div className="card">
-        <h2>Signup</h2>
+    <div className="card">
+      <h2>Recipient - Request Items</h2>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <input
+        type="text"
+        placeholder="Recipient Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+      <input
+        type="text"
+        placeholder="Item Needed"
+        value={item}
+        onChange={(e) => setItem(e.target.value)}
+      />
 
-        <button onClick={handleSignup}>
-          Create Account
-        </button>
-      </div>
+      <input
+        type="number"
+        placeholder="Quantity"
+        value={quantity}
+        onChange={(e) => setQuantity(e.target.value)}
+      />
+
+      <button onClick={handleRequest}>
+        Submit Request
+      </button>
     </div>
   );
 }
 
-export default Signup;
+export default Recipient;

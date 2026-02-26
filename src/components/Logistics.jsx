@@ -1,39 +1,56 @@
 import { useState } from "react";
 
 function Logistics({ database, setDatabase }) {
-  const [id, setId] = useState("");
+  const [serialId, setSerialId] = useState("");
   const [status, setStatus] = useState("Pending");
 
-  const updateStatus = () => {
-    if (!database[id]) {
-      alert("ID not found");
+  const handleUpdate = () => {
+    if (!serialId) {
+      alert("Please enter Serial ID");
       return;
     }
 
-    setDatabase((prev) => ({
-      ...prev,
-      [id]: {
-        ...prev[id],
-        status,
-      },
-    }));
+    if (!database[serialId]) {
+      alert("Serial ID not found");
+      return;
+    }
 
-    alert("Status updated");
+    const updatedDatabase = {
+      ...database,
+      [serialId]: {
+        ...database[serialId],
+        status: status,
+      },
+    };
+
+    setDatabase(updatedDatabase);
+    alert("Status updated successfully");
+    setSerialId("");
   };
 
   return (
     <div className="card">
-      <h2>Logistics</h2>
+      <h2>Logistics Panel</h2>
+
       <input
+        type="text"
         placeholder="Enter Serial ID"
-        onChange={(e) => setId(e.target.value)}
+        value={serialId}
+        onChange={(e) => setSerialId(e.target.value)}
       />
-      <select onChange={(e) => setStatus(e.target.value)}>
-        <option>Pending</option>
-        <option>In Transit</option>
-        <option>Delivered</option>
+
+      <select
+        value={status}
+        onChange={(e) => setStatus(e.target.value)}
+      >
+        <option value="Pending">Pending</option>
+        <option value="In Transit">In Transit</option>
+        <option value="Delivered">Delivered</option>
       </select>
-      <button onClick={updateStatus}>Update</button>
+
+      <button onClick={handleUpdate}>
+        Update Status
+      </button>
     </div>
   );
 }

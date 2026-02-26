@@ -5,6 +5,11 @@ function Login({ setIsAuth, setShowSignup }) {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
+    if (!email || !password) {
+      alert("Please enter email and password");
+      return;
+    }
+
     const users = JSON.parse(localStorage.getItem("users")) || {};
 
     if (users[email] && users[email] === password) {
@@ -17,6 +22,8 @@ function Login({ setIsAuth, setShowSignup }) {
 
   return (
     <div className="auth-container">
+      
+      {/* 🔥 Heading */}
       <div className="login-heading">
         Relief Connect
       </div>
@@ -26,14 +33,14 @@ function Login({ setIsAuth, setShowSignup }) {
 
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Enter Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
