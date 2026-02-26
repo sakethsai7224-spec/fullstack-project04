@@ -26,8 +26,8 @@ body {
 ================================ */
 .card {
   width: 420px;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.9);
+  padding: 35px;
+  background: rgba(255, 255, 255, 0.92);
   border-radius: 14px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
   text-align: center;
@@ -37,39 +37,46 @@ body {
    RELIEF CONNECTION HEADING
 ================================ */
 .brand-heading {
-  text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   font-weight: 900;
   letter-spacing: 2px;
+  line-height: 1.2;
 }
 
 /* Relief word */
 .brand-relief {
-  font-size: 38px;
-  background: linear-gradient(90deg, #000000, #555555, #000000);
-  background-size: 300% auto;
+  font-size: 36px;
+  margin-right: 6px;
+  background: linear-gradient(90deg, #000, #666, #000);
+  background-size: 250% auto;
+
+  background-clip: text;
   -webkit-background-clip: text;
+  color: transparent; 
   -webkit-text-fill-color: transparent;
-  animation: shine 4s linear infinite;
+  animation: shine 5s linear infinite;
 }
 
 /* Connection word (larger) */
 .brand-connection {
-  font-size: 50px; /* Bigger */
-  background: linear-gradient(90deg, #000000, #777777, #000000);
-  background-size: 300% auto;
+  font-size: 48px;
+  background: linear-gradient(90deg, #000, #888, #000);
+  background-size: 250% auto;
+
+  background-clip: text;
   -webkit-background-clip: text;
+  color: transparent; 
   -webkit-text-fill-color: transparent;
-  animation: shine 4s linear infinite;
+  animation: shine 5s linear infinite;
 }
 
-/* Shine animation */
+/* Smooth Shine Animation */
 @keyframes shine {
   0% {
     background-position: 0% center;
   }
   100% {
-    background-position: 300% center;
+    background-position: 250% center;
   }
 }
 
@@ -79,10 +86,17 @@ body {
 input {
   width: 100%;
   padding: 12px;
-  margin: 10px 0;
+  margin: 12px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 14px;
+  transition: 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2a5298;
+  box-shadow: 0 0 6px rgba(42, 82, 152, 0.5);
 }
 
 /* ================================
@@ -91,23 +105,25 @@ input {
 button {
   width: 100%;
   padding: 12px;
-  margin-top: 10px;
+  margin-top: 14px;
   border-radius: 8px;
   border: none;
   background-color: #2a5298;
   color: white;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 button:hover {
   background-color: #1e3c72;
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
+/* Signup Button */
 .small-btn {
   background-color: #777;
+  margin-top: 10px;
 }
 
 .small-btn:hover {
@@ -120,13 +136,14 @@ button:hover {
 @media (max-width: 768px) {
   .card {
     width: 90%;
+    padding: 25px;
   }
 
   .brand-relief {
-    font-size: 30px;
+    font-size: 28px;
   }
 
   .brand-connection {
-    font-size: 38px;
+    font-size: 36px;
   }
 }
