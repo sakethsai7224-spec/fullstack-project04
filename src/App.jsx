@@ -17,7 +17,7 @@ function App() {
   const [database, setDatabase] = useState({});
 
   /* ================================
-     BACKGROUND IMAGES
+     BACKGROUND IMAGES (UNCHANGED)
   ================================ */
 
   const backgrounds = {
@@ -48,6 +48,7 @@ function App() {
   return (
     <div
       style={{
+        position: "relative",
         minHeight: "100vh",
         backgroundImage: `url(${currentBackground})`,
         backgroundSize: "cover",
@@ -55,74 +56,77 @@ function App() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* ================================
-         AUTH SECTION
-      ================================ */}
-      {!isAuth ? (
-        showSignup ? (
-          <Signup setShowSignup={setShowSignup} />
+      {/* DARK OVERLAY FOR READABILITY */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "rgba(0,0,0,0.55)",
+          zIndex: 0,
+        }}
+      />
+
+      <div style={{ position: "relative", zIndex: 1 }}>
+        {!isAuth ? (
+          showSignup ? (
+            <Signup setShowSignup={setShowSignup} />
+          ) : (
+            <Login
+              setIsAuth={setIsAuth}
+              setShowSignup={setShowSignup}
+            />
+          )
         ) : (
-          <Login
-            setIsAuth={setIsAuth}
-            setShowSignup={setShowSignup}
-          />
-        )
-      ) : (
-        <div>
-          {/* ================================
-             TOP BAR
-          ================================ */}
-          <div className="top-bar">
-            <div className="username">
-              Welcome, {localStorage.getItem("currentUser")}
+          <div>
+            {/* TOP BAR */}
+            <div className="top-bar">
+              <div className="username">
+                Welcome, {localStorage.getItem("currentUser")}
+              </div>
+            </div>
+
+            {/* NAVIGATION */}
+            <Navbar
+              setSection={setSection}
+              setIsAuth={setIsAuth}
+            />
+
+            {/* MAIN CONTENT */}
+            <div className="content-area">
+              {section === "admin" && (
+                <Admin database={database} />
+              )}
+
+              {section === "donor" && (
+                <Donor setDatabase={setDatabase} />
+              )}
+
+              {section === "recipient" && (
+                <Recipient setDatabase={setDatabase} />
+              )}
+
+              {section === "logistics" && (
+                <Logistics
+                  database={database}
+                  setDatabase={setDatabase}
+                />
+              )}
+
+              {section === "track" && (
+                <Track database={database} />
+              )}
+
+              {section === "timetable" && (
+                <Timetable />
+              )}
+
+              {section === "profile" && (
+                <Profile />
+              )}
             </div>
           </div>
-
-          {/* ================================
-             NAVIGATION
-          ================================ */}
-          <Navbar
-            setSection={setSection}
-            setIsAuth={setIsAuth}
-          />
-
-          {/* ================================
-             MAIN CONTENT
-          ================================ */}
-          <div className="content-area">
-            {section === "admin" && (
-              <Admin database={database} />
-            )}
-
-            {section === "donor" && (
-              <Donor setDatabase={setDatabase} />
-            )}
-
-            {section === "recipient" && (
-              <Recipient setDatabase={setDatabase} />
-            )}
-
-            {section === "logistics" && (
-              <Logistics
-                database={database}
-                setDatabase={setDatabase}
-              />
-            )}
-
-            {section === "track" && (
-              <Track database={database} />
-            )}
-
-            {section === "timetable" && (
-              <Timetable />
-            )}
-
-            {section === "profile" && (
-              <Profile />
-            )}
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

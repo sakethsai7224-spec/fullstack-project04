@@ -21,6 +21,13 @@ function Login({ setIsAuth, setShowSignup }) {
   return (
     <div className="auth-container">
       <div className="card">
+
+        {/* Brand Heading */}
+        <div className="brand-heading">
+          <span className="brand-relief">Relief </span>
+          <span className="brand-connection">Connection</span>
+        </div>
+
         <h2>Login</h2>
 
         <input
@@ -41,7 +48,7 @@ function Login({ setIsAuth, setShowSignup }) {
           Login
         </button>
 
-        <p>
+        <p style={{ marginTop: "15px" }}>
           Don't have an account?
           <button
             className="small-btn"
@@ -50,6 +57,7 @@ function Login({ setIsAuth, setShowSignup }) {
             Signup
           </button>
         </p>
+
       </div>
     </div>
   );
