@@ -1,0 +1,257 @@
+/* ================================
+   RESET
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* ================================
+   LOGIN PAGE HEADING
+================================ */
+.login-heading {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 30px;
+  text-align: center;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* ================================
+   TOP BAR
+================================ */
+.top-bar {
+  width: 100%;
+  height: 60px;
+  background-color: #1e3c72;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 40px;
+}
+
+.username {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* ================================
+   NAVBAR
+================================ */
+.navbar {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.navbar button {
+  width: 160px !important;
+  padding: 10px !important;
+  font-size: 18px !important;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+/* ================================
+   CONTENT AREA
+================================ */
+.content-area {
+  margin-left: 220px;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ================================
+   AUTH CONTAINER
+================================ */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================================
+   CARD (Login/Admin/etc)
+================================ */
+.card {
+  width: 420px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+/* ================================
+   FORM ELEMENTS
+================================ */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+/* ================================
+   MAIN BUTTONS
+================================ */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2a5298;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #1e3c72;
+  transform: scale(1.03);
+}
+
+/* ================================
+   SMALL SIGNUP BUTTON
+================================ */
+.small-btn {
+  width: auto !important;
+  padding: 6px 14px !important;
+  font-size: 14px !important;
+  margin-left: 8px;
+  background-color: #777;
+}
+
+.small-btn:hover {
+  background-color: #555;
+}
+
+.switch-text {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+/* ================================
+   TIMETABLE
+================================ */
+.timetable-container {
+  width: 80%;
+  text-align: center;
+}
+
+.timetable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border: 4px solid black;
+}
+
+.timetable th,
+.timetable td {
+  border: 4px solid black;
+  padding: 14px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.timetable th {
+  background-color: #2a5298;
+  color: white;
+}
+
+.timetable-note {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+}
+
+/* ================================
+   PROFILE PAGE
+================================ */
+.profile-container {
+  width: 450px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.profile-container input,
+.profile-container textarea,
+.profile-container select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Profile Image */
+.profile-pic {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #2a5298;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .navbar {
+    position: static;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .content-area {
+    margin-left: 0;
+  }
+
+  .navbar button {
+    width: 140px !important;
+    font-size: 16px !important;
+  }
+
+  .profile-container,
+  .card {
+    width: 90%;
+  }
+
+  .username {
+    font-size: 16px;
+  }
+
+  .login-heading {
+    font-size: 36px;
+  }
+}
