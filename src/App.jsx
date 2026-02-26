@@ -8,7 +8,7 @@ import Recipient from "./components/Recipient";
 import Logistics from "./components/Logistics";
 import Track from "./components/Track";
 import Timetable from "./components/Timetable";
-import Profile from "./components/Profile";
+import Profile from "./components/profile";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -16,10 +16,13 @@ function App() {
   const [section, setSection] = useState("admin");
   const [database, setDatabase] = useState({});
 
-  // 🔥 Backgrounds for each section
+  /* ================================
+     BACKGROUND IMAGES
+  ================================ */
+
   const backgrounds = {
     login:
-      "https://images.unsplash.com/photo-1606788075761-0c23b0a7f9c0",
+      "https://images.unsplash.com/photo-1593113598332-cd288d649433",
     admin:
       "https://images.unsplash.com/photo-1509099836639-18ba1795216d",
     donor:
@@ -27,15 +30,15 @@ function App() {
     recipient:
       "https://images.unsplash.com/photo-1519681393784-d120267933ba",
     logistics:
-      "https://images.unsplash.com/photo-1581091215367-59ab6f5d4a8f",
+      "https://tse2.mm.bing.net/th/id/OIP.XtHtW8whGq0B5SyXTL2nuQHaFW?pid=Api&P=0&h=180https://tse4.mm.bing.net/th/id/OIP.C64UtqzffawFeSaTGGuaYgHaEK?pid=Api&P=0&h=180",
     track:
       "https://images.unsplash.com/photo-1492724441997-5dc865305da7",
     timetable:
-      "https://images.unsplash.com/photo-1521790360285-8a04f8e5c4c7",
+      "https://tse3.mm.bing.net/th/id/OIP.O6BI76KJdH1mcbmVVl7W-gHaE4?pid=Api&P=0&h=180",
     profile:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
     default:
-      "https://images.unsplash.com/photo-1606788075761-0c23b0a7f9c0",
+      "https://images.unsplash.com/photo-1593113598332-cd288d649433",
   };
 
   const currentBackground = !isAuth
@@ -52,6 +55,9 @@ function App() {
         backgroundRepeat: "no-repeat",
       }}
     >
+      {/* ================================
+         AUTH SECTION
+      ================================ */}
       {!isAuth ? (
         showSignup ? (
           <Signup setShowSignup={setShowSignup} />
@@ -63,20 +69,26 @@ function App() {
         )
       ) : (
         <div>
-          {/* 🔥 TOP BAR */}
+          {/* ================================
+             TOP BAR
+          ================================ */}
           <div className="top-bar">
             <div className="username">
               Welcome, {localStorage.getItem("currentUser")}
             </div>
           </div>
 
-          {/* 🔥 NAVBAR */}
+          {/* ================================
+             NAVIGATION
+          ================================ */}
           <Navbar
             setSection={setSection}
             setIsAuth={setIsAuth}
           />
 
-          {/* 🔥 CONTENT AREA */}
+          {/* ================================
+             MAIN CONTENT
+          ================================ */}
           <div className="content-area">
             {section === "admin" && (
               <Admin database={database} />

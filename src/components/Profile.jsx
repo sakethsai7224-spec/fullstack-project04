@@ -1,124 +1,156 @@
 import { useState, useEffect } from "react";
 
 function Profile() {
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [job, setJob] = useState("");
-  const [purpose, setPurpose] = useState("");
-  const [rating, setRating] = useState("");
-  const [image, setImage] = useState(null);
+  const [profile, setProfile] = useState({
+    name: "",
+    age: "",
+    job: "",
+    purpose: "",
+    rating: "",
+    phone: "",
+    location: "",
+    about: "",
+    image: "",
+  });
 
-  const currentUser = localStorage.getItem("currentUser");
+  const [error, setError] = useState("");
 
+  // Load saved profile
   useEffect(() => {
-    const savedProfile = JSON.parse(
-      localStorage.getItem(`profile_${currentUser}`)
-    );
-
-    if (savedProfile) {
-      setName(savedProfile.name || "");
-      setAge(savedProfile.age || "");
-      setJob(savedProfile.job || "");
-      setPurpose(savedProfile.purpose || "");
-      setRating(savedProfile.rating || "");
-      setImage(savedProfile.image || null);
+    const saved = JSON.parse(localStorage.getItem("userProfile"));
+    if (saved) {
+      setProfile(saved);
+    } else {
+      setProfile((prev) => ({
+        ...prev,
+        name: localStorage.getItem("currentUser") || "",
+      }));
     }
-  }, [currentUser]);
+  }, []);
 
-  const handleImageUpload = (e) => {
+  const handleChange = (e) => {
+    setProfile({
+      ...profile,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Instant Image Preview
+  const handleImage = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
+
     reader.onloadend = () => {
-      setImage(reader.result);
+      setProfile((prev) => ({
+        ...prev,
+        image: reader.result,
+      }));
     };
+
     reader.readAsDataURL(file);
   };
 
-  const handleSave = () => {
-    if (rating < 1 || rating > 5) {
-      alert("Rating must be between 1 and 5");
+  const saveProfile = () => {
+    if (!profile.rating) {
+      setError("Please select a rating between 1 and 5");
       return;
     }
 
-    const profileData = {
-      name,
-      age,
-      job,
-      purpose,
-      rating,
-      image,
-    };
-
-    localStorage.setItem(
-      `profile_${currentUser}`,
-      JSON.stringify(profileData)
-    );
-
-    alert("Profile Saved Successfully");
+    setError("");
+    localStorage.setItem("userProfile", JSON.stringify(profile));
+    alert("Profile Saved Successfully!");
   };
 
   return (
     <div className="profile-container">
       <h2>My Profile</h2>
 
-      {image && (
+      {profile.image && (
         <img
-          src={image}
+          src={profile.image}
           alt="Profile"
           className="profile-pic"
         />
       )}
 
       <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-      />
-
-      <input
-        type="text"
+        name="name"
         placeholder="Full Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={profile.name}
+        onChange={handleChange}
       />
 
       <input
-        type="number"
+        name="age"
         placeholder="Age"
-        value={age}
-        onChange={(e) => setAge(e.target.value)}
+        value={profile.age}
+        onChange={handleChange}
       />
 
       <input
-        type="text"
-        placeholder="Job"
-        value={job}
-        onChange={(e) => setJob(e.target.value)}
+        name="job"
+        placeholder="Job / Occupation"
+        value={profile.job}
+        onChange={handleChange}
       />
 
-      <textarea
+      <input
+        name="phone"
+        placeholder="Phone Number"
+        value={profile.phone}
+        onChange={handleChange}
+      />
+
+      <input
+        name="location"
+        placeholder="Location"
+        value={profile.location}
+        onChange={handleChange}
+      />
+
+      <input
+        name="purpose"
         placeholder="Purpose of Donation"
-        value={purpose}
-        onChange={(e) => setPurpose(e.target.value)}
+        value={profile.purpose}
+        onChange={handleChange}
       />
 
+      {/* 🔥 Rating Dropdown (1–5 Only) */}
       <select
-        value={rating}
-        onChange={(e) => setRating(e.target.value)}
+        name="rating"
+        value={profile.rating}
+        onChange={handleChange}
       >
         <option value="">Select Rating (1-5)</option>
-        <option value="1">1 ⭐</option>
-        <option value="2">2 ⭐</option>
-        <option value="3">3 ⭐</option>
-        <option value="4">4 ⭐</option>
-        <option value="5">5 ⭐</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
       </select>
 
-      <button onClick={handleSave}>
-        Save Profile
-      </button>
+      {error && (
+        <p style={{ color: "red", fontSize: "14px" }}>
+          {error}
+        </p>
+      )}
+
+      <textarea
+        name="about"
+        placeholder="About Yourself"
+        value={profile.about}
+        onChange={handleChange}
+      />
+
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImage}
+      />
+
+      <button onClick={saveProfile}>Save Profile</button>
     </div>
   );
 }

@@ -1,96 +1,14 @@
 /* ================================
-   GLOBAL RESET
+   RESET
 ================================ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-  min-height: 100vh;
-}
-
-/* ================================
-   LOGIN / SIGNUP SECTION
-================================ */
-.auth-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Heading */
-.login-heading {
-  font-size: 42px;
-  font-weight: bold;
-  color: white;
-  margin-bottom: 25px;
-  letter-spacing: 1px;
-}
-
-/* Card */
-.card {
-  width: 400px;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
-}
-
-/* Inputs */
-.card input,
-.card textarea,
-.card select {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-
-.card textarea {
-  resize: none;
-  height: 80px;
-}
-
-/* Buttons */
-.card button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  background-color: #1e3c72;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.card button:hover {
-  background-color: #2a5298;
-}
-
-/* Small button (signup/login switch) */
-.small-btn {
-  width: auto;
-  padding: 6px 12px;
-  margin-left: 8px;
-  font-size: 13px;
-  background-color: transparent;
-  color: #1e3c72;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.small-btn:hover {
-  text-decoration: underline;
+  font-family: Arial, sans-serif;
 }
 
 /* ================================
@@ -99,7 +17,7 @@ body {
 .top-bar {
   width: 100%;
   height: 60px;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #1e3c72;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -117,7 +35,7 @@ body {
 ================================ */
 .navbar {
   position: fixed;
-  top: 90px;
+  top: 80px;
   left: 20px;
   display: flex;
   flex-direction: column;
@@ -125,74 +43,148 @@ body {
 }
 
 .navbar button {
-  width: 170px;
-  padding: 8px;
-  font-size: 16px;
+  width: 160px !important;
+  padding: 10px !important;
+  font-size: 18px !important;
   font-weight: bold;
   border-radius: 8px;
-  border: none;
-  background-color: #1e3c72;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.navbar button:hover {
-  background-color: #2a5298;
-  transform: translateX(5px);
 }
 
 /* ================================
    CONTENT AREA
 ================================ */
 .content-area {
-  margin-left: 230px;
-  margin-top: 60px;
+  margin-left: 220px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
 }
 
 /* ================================
-   PROFILE IMAGE
+   CARD (Login/Admin/etc)
 ================================ */
-.profile-pic {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #1e3c72;
-  margin-bottom: 10px;
+.card {
+  width: 420px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+/* ================================
+   AUTH CONTAINER
+================================ */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================================
+   FORM ELEMENTS
+================================ */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2a5298;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #1e3c72;
+  transform: scale(1.03);
 }
 
 /* ================================
    TIMETABLE
 ================================ */
+.timetable-container {
+  width: 80%;
+  text-align: center;
+}
+
 .timetable {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  background: white;
+  border: 4px solid black;
 }
 
 .timetable th,
 .timetable td {
-  border: 3px solid black;
-  padding: 12px;
+  border: 4px solid black;
+  padding: 14px;
   text-align: center;
   font-weight: bold;
 }
 
 .timetable th {
-  background-color: #1e3c72;
+  background-color: #2a5298;
   color: white;
 }
 
 .timetable-note {
   margin-top: 20px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   color: red;
+}
+
+/* ================================
+   PROFILE PAGE
+================================ */
+.profile-container {
+  width: 450px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   text-align: center;
+}
+
+.profile-container input,
+.profile-container textarea,
+.profile-container select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Profile Image Preview */
+.profile-pic {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #2a5298;
 }
 
 /* ================================
@@ -201,17 +193,25 @@ body {
 @media (max-width: 768px) {
   .navbar {
     position: static;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px 0;
+    align-items: center;
+    margin-bottom: 20px;
   }
 
   .content-area {
     margin-left: 0;
   }
 
+  .navbar button {
+    width: 140px !important;
+    font-size: 16px !important;
+  }
+
+  .profile-container,
   .card {
     width: 90%;
+  }
+
+  .username {
+    font-size: 16px;
   }
 }

@@ -5,42 +5,34 @@ function Login({ setIsAuth, setShowSignup }) {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    if (!email || !password) {
-      alert("Please enter email and password");
-      return;
-    }
-
     const users = JSON.parse(localStorage.getItem("users")) || {};
 
-    if (users[email] && users[email] === password) {
-      localStorage.setItem("currentUser", email);
+    if (
+      users[email] &&
+      users[email].password === password
+    ) {
+      localStorage.setItem("currentUser", users[email].name);
       setIsAuth(true);
     } else {
-      alert("Wrong credentials");
+      alert("Invalid credentials");
     }
   };
 
   return (
     <div className="auth-container">
-      
-      {/* 🔥 Heading */}
-      <div className="login-heading">
-        Relief Connect
-      </div>
-
       <div className="card">
         <h2>Login</h2>
 
         <input
           type="email"
-          placeholder="Enter Email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
-          placeholder="Enter Password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -49,7 +41,7 @@ function Login({ setIsAuth, setShowSignup }) {
           Login
         </button>
 
-        <p className="switch-text">
+        <p>
           Don't have an account?
           <button
             className="small-btn"
