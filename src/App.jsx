@@ -8,7 +8,7 @@ import Recipient from "./components/Recipient";
 import Logistics from "./components/Logistics";
 import Track from "./components/Track";
 import Timetable from "./components/Timetable";
-import Profile from "./components/profile";
+import Profile from "./components/Profile";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
