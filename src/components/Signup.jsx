@@ -4,73 +4,113 @@ function Signup({ setShowSignup }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSignup = () => {
-    if (!name || !email || !password) {
-      alert("Please fill all fields");
+  const handleSignup = async () => {
+    if (!name.trim() || !email.trim() || !password.trim() || !phone.trim()) {
+      alert("Please fill in all fields");
       return;
     }
 
-    const users = JSON.parse(localStorage.getItem("users")) || {};
-
-    if (users[email]) {
-      alert("User already exists");
+    if (!email.endsWith("@gmail.com") && !email.endsWith("@kluniversity.in")) {
+      alert("Email must end with @gmail.com or @kluniversity.in");
       return;
     }
 
-    users[email] = {
-      name: name,
-      password: password,
-    };
+    setLoading(true);
+    try {
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, phone }),
+      });
 
-    localStorage.setItem("users", JSON.stringify(users));
+      const data = await response.json();
 
-    alert("Account created successfully!");
-    setShowSignup(false);
+      if (response.ok) {
+        alert("Account created successfully! Please login.");
+        setShowSignup(false);
+      } else {
+        alert(data.error || "Signup failed");
+      }
+    } catch (err) {
+      alert("Error connecting to server. Please check if backend is running.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="auth-container">
-      <div className="card">
-        <h2>Signup</h2>
+    <div className="auth-container modern-bg">
+      <div className="login-card">
+        <div className="login-header">
+          <div className="logo-icon">✨</div>
+          <h1>Create Account</h1>
+          <p>Join Relief Connection and start making a difference.</p>
+        </div>
 
-        <input
-          type="text"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <div className="login-body">
+          <div className="input-group">
+            <label>Full Name</label>
+            <input
+              type="text"
+              placeholder="e.g. John Doe"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <div className="input-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              placeholder="e.g. name@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <div className="input-group">
+            <label>Mobile Number</label>
+            <input
+              type="text"
+              placeholder="+91 XXXXX XXXXX"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
 
-        <button onClick={handleSignup}>
-          Create Account
-        </button>
+          <div className="input-group">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Min. 6 characters"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-        <p>
-          Already have an account?
-          <button
-            className="small-btn"
-            onClick={() => setShowSignup(false)}
+          <button 
+            className={`primary-btn ${loading ? 'loading' : ''}`} 
+            onClick={handleSignup}
+            disabled={loading}
           >
-            Login
+            {loading ? "Creating Account..." : "Sign Up"}
           </button>
-        </p>
+        </div>
+
+        <div className="login-footer">
+          <p>
+            Already have an account?{" "}
+            <button className="text-btn bold" onClick={() => setShowSignup(false)}>
+              Back to Login
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Signup;
+export default Signup;

@@ -1,63 +1,100 @@
 import { useState } from "react";
 
-function Login({ setIsAuth, setShowSignup }) {
+function Login({ setIsAuth, setShowSignup, setShowForgot }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
-    const users = JSON.parse(localStorage.getItem("users")) || {};
+  const handleLogin = async () => {
+    if (!email.trim() || !password.trim()) {
+      alert("Please fill in all fields");
+      return;
+    }
 
-    if (
-      users[email] &&
-      users[email].password === password
-    ) {
-      localStorage.setItem("currentUser", users[email].name);
-      setIsAuth(true);
-    } else {
-      alert("Invalid credentials");
+    if (!email.endsWith("@gmail.com") && !email.endsWith("@kluniversity.in")) {
+      alert("Email must end with @gmail.com or @kluniversity.in");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("currentUser", data.user.name);
+        localStorage.setItem("userEmail", data.user.email);
+        localStorage.setItem("userData", JSON.stringify(data.user));
+        setIsAuth(true);
+      } else {
+        alert(data.error || "Invalid credentials");
+      }
+    } catch (err) {
+      alert("Error connecting to server. Please check if backend is running.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="auth-container">
-      <div className="card">
-
-        {/* Brand Heading */}
-        <div className="brand-heading">
-          <span className="brand-relief">Relief </span>
-          <span className="brand-connection">Connection</span>
+    <div className="auth-container modern-bg">
+      <div className="login-card">
+        <div className="login-header">
+          <div className="logo-icon">🤝</div>
+          <h1>Relief Connection</h1>
+          <p>Welcome back! Please enter your details.</p>
         </div>
 
-        <h2>Login</h2>
+        <div className="login-body">
+          <div className="input-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              placeholder="e.g. name@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <div className="input-group">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+            />
+          </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <div className="forgot-link-container">
+            <button className="text-btn small" onClick={() => setShowForgot(true)}>
+              Forgot Password?
+            </button>
+          </div>
 
-        <button onClick={handleLogin}>
-          Login
-        </button>
-
-        <p style={{ marginTop: "15px" }}>
-          Don't have an account?
-          <button
-            className="small-btn"
-            onClick={() => setShowSignup(true)}
+          <button 
+            className={`primary-btn ${loading ? 'loading' : ''}`} 
+            onClick={handleLogin}
+            disabled={loading}
           >
-            Signup
+            {loading ? "Signing in..." : "Sign In"}
           </button>
-        </p>
+        </div>
 
+        <div className="login-footer">
+          <p>
+            Don't have an account?{" "}
+            <button className="text-btn bold" onClick={() => setShowSignup(true)}>
+              Sign up for free
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   );

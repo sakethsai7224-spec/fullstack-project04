@@ -1,44 +1,54 @@
 function Navbar({ setSection, setIsAuth }) {
   const handleLogout = () => {
-    localStorage.removeItem("currentUser");
-    setIsAuth(false);
+    const confirmLogout = window.confirm("Are you sure you want to logout? Any unsaved progress may be lost.");
+    if (confirmLogout) {
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userData");
+      setIsAuth(false);
+    }
   };
 
   return (
     <div className="navbar">
       <button onClick={() => setSection("admin")}>
-        Admin
+        <span>📊</span> Admin Dashboard
       </button>
 
       <button onClick={() => setSection("donor")}>
-        Donor
+        <span>🎁</span> Donor Panel
       </button>
 
       <button onClick={() => setSection("recipient")}>
-        Recipient
+        <span>🤝</span> Recipient View
       </button>
 
       <button onClick={() => setSection("logistics")}>
-        Logistics
+        <span>🚚</span> Logistics Hub
       </button>
 
       <button onClick={() => setSection("track")}>
-        Track
+        <span>📍</span> Track Status
       </button>
 
       <button onClick={() => setSection("timetable")}>
-        Timetable
+        <span>📅</span> Timetable
       </button>
 
       <button onClick={() => setSection("profile")}>
-        My Profile
+        <span>👤</span> My Profile
       </button>
 
-      <button onClick={handleLogout}>
-        Logout
-      </button>
+      <div style={{ marginTop: "auto", paddingTop: "20px" }}>
+        <button 
+          onClick={handleLogout}
+          style={{ background: "#dc3545" }}
+        >
+          <span>🚪</span> Logout
+        </button>
+      </div>
     </div>
   );
 }
 
-export default Navbar;
+export default Navbar;
